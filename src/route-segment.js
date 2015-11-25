@@ -115,7 +115,44 @@ mod.provider( '$routeSegment',
             }
         }
     }
-    
+
+    /**
+     * Sort JavaScript Object
+     * CF Webtools : Chris Tierney
+     * obj = object to sort
+     * order = 'asc' or 'desc'
+     */
+    function sortObj( obj, order ) {
+      "use strict";
+
+      var key,
+        tempArry = [],
+        i,
+        tempObj = {};
+
+      for ( key in obj ) {
+        tempArry.push(key);
+      }
+
+      tempArry.sort(
+        function(a, b) {
+          return a.toLowerCase().localeCompare( b.toLowerCase() );
+        }
+      );
+
+      if( order === 'desc' ) {
+        for ( i = tempArry.length - 1; i >= 0; i-- ) {
+          tempObj[ tempArry[i] ] = obj[ tempArry[i] ];
+        }
+      } else {
+        for ( i = 0; i < tempArry.length; i++ ) {
+          tempObj[ tempArry[i] ] = obj[ tempArry[i] ];
+        }
+      }
+
+      return tempObj;
+    }
+
     /**
      * The shorthand for $routeProvider.when() method with specified route name.
      * @param {string} path Route URL, e.g. '/foo/bar'
@@ -129,6 +166,7 @@ mod.provider( '$routeSegment',
 
         $routeProvider.when(path, route);
         segmentRoutes[name] = path;
+        sortObj(segmentRoutes, 'desc');
         return this;
     };
     
