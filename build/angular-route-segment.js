@@ -122,59 +122,59 @@ mod.provider( '$routeSegment',
         }
     }
 
-          /**
-           * Sort JavaScript Object
-           * CF Webtools : Chris Tierney
-           * obj = object to sort
-           * order = 'asc' or 'desc'
-           */
-          function sortObj( obj, order ) {
-            "use strict";
+    /**
+     * Sort JavaScript Object
+     * CF Webtools : Chris Tierney
+     * obj = object to sort
+     * order = 'asc' or 'desc'
+     */
+    function sortObj( obj, order ) {
+      "use strict";
 
-            var key,
-              tempArry = [],
-              i,
-              tempObj = {};
+      var key,
+        tempArry = [],
+        i,
+        tempObj = {};
 
-            for ( key in obj ) {
-              tempArry.push(key);
-            }
+      for ( key in obj ) {
+        tempArry.push(key);
+      }
 
-            tempArry.sort(
-              function(a, b) {
-                return a.toLowerCase().localeCompare( b.toLowerCase() );
-              }
-            );
+      tempArry.sort(
+        function(a, b) {
+          return a.toLowerCase().localeCompare( b.toLowerCase() );
+        }
+      );
 
-            if( order === 'desc' ) {
-              for ( i = tempArry.length - 1; i >= 0; i-- ) {
-                tempObj[ tempArry[i] ] = obj[ tempArry[i] ];
-              }
-            } else {
-              for ( i = 0; i < tempArry.length; i++ ) {
-                tempObj[ tempArry[i] ] = obj[ tempArry[i] ];
-              }
-            }
+      if( order === 'desc' ) {
+        for ( i = tempArry.length - 1; i >= 0; i-- ) {
+          tempObj[ tempArry[i] ] = obj[ tempArry[i] ];
+        }
+      } else {
+        for ( i = 0; i < tempArry.length; i++ ) {
+          tempObj[ tempArry[i] ] = obj[ tempArry[i] ];
+        }
+      }
 
-            return tempObj;
-          }
+      return tempObj;
+    }
 
-          /**
-           * The shorthand for $routeProvider.when() method with specified route name.
-           * @param {string} path Route URL, e.g. '/foo/bar'
-           * @param {string} name Fully qualified route name, e.g. 'foo.bar'
-           * @param {Object} route Mapping information to be assigned to $route.current on route match.
-           */
-          $routeSegmentProvider.when = function(path, name, route) {
-            if (route == undefined)
-              route = {};
-            route.segment = name;
+    /**
+     * The shorthand for $routeProvider.when() method with specified route name.
+     * @param {string} path Route URL, e.g. '/foo/bar'
+     * @param {string} name Fully qualified route name, e.g. 'foo.bar'
+     * @param {Object} route Mapping information to be assigned to $route.current on route match.
+     */
+    $routeSegmentProvider.when = function(path, name, route) {
+        if (route == undefined)
+            route = {};
+        route.segment = name;
 
-            $routeProvider.when(path, route);
-            segmentRoutes[name] = path;
-            sortObj(segmentRoutes, 'desc');
-            return this;
-          };
+        $routeProvider.when(path, route);
+        segmentRoutes[name] = path;
+        sortObj(segmentRoutes, 'desc');
+        return this;
+    };
     
     // Extending the provider with the methods of rootPointer
     // to start configuration.
